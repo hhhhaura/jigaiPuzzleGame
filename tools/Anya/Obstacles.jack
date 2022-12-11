@@ -1,0 +1,97 @@
+class Obstacles {
+	field int cur, step;
+	field List st, end;
+
+	constructor Obstacles new() {
+		let cur = 0;
+		let step = 16;
+		let st = null;
+		let end = null;
+		return this;
+	}
+	method boolean collide(Anya anya, int prex) { // check if this passes a position
+		var List p;
+		var Obj obj;
+		var boolean yes;
+		var int x, x1, y, y1, type;
+		let x = anya.getX();
+		let x1 = anya.getX1();
+		let y = anya.getY();
+		let y1 = anya.getY1();
+		let p = st;
+		let type = 0;
+		let yes = false;
+		while(~(p = null)) {
+			let obj = p.getData();
+			if(((Utils.max(x, obj.getX(cur))-1) < Utils.min(x1, obj.getX1(cur))) &
+					(Utils.max(y, obj.getY(cur))-1 < Utils.min(y1, obj.getY1(cur)))) {
+				if((prex < obj.getX(cur - step))) {
+					let x = x - (x1 - obj.getX(cur) + 1);
+					let x1 = obj.getX(cur) - 1;
+				}
+				else {
+					if(type = 1) {
+						if(y - 1 < obj.getY1(cur)) {
+							let y1 = y1 - (y - obj.getY1(cur) - 1);
+							let y = obj.getY1(cur) + 1;
+						}
+					}
+					else {
+						if((y1 + 1 > obj.getY(cur))) {
+							let y = y - (y1 - obj.getY(cur) + 1);
+							let y1 = obj.getY(cur) - 1;
+						}
+					}
+				}
+				do anya.setPos(x, y, x1, y1);
+				if(anya.getX() < 0) { let yes = true; }
+			}
+			let p = p.getNext();
+		}
+		return yes;
+	}
+	method void add() {
+		var List pp;
+		var Obj obj;
+		let obj = Obj.new(Random.binary(), cur+440);
+		let pp = end;
+		let end = List.new(obj, null);
+		if(pp=null) { let st = end; }
+		else { do pp.setNext(end); }
+		
+		return;
+	}
+	method void show(int col) {
+		var List p, tp;
+		var Obj obj;
+		let p = st;
+		//if(Utils.modulo(cur + step, 150) = 0) { do add(); }
+		while(~(p = null)) {
+			let obj = p.getData();
+			if(col = 0) { do obj.erase(cur); }
+			else { do obj.draw(cur); }
+			let p = p.getNext();
+		}
+		return;
+	}
+	method void move() {
+		var List p, tp;
+		var Obj obj;
+		let p = st;
+		if(Utils.modulo(cur + step, 30) = 0) { do add(); }
+		while(~(p = null)) {
+			let obj = p.getData();
+			if((obj.getX(cur+step)<0)) {
+				let tp = p;
+				let p = p.getNext();
+				let st = p;
+				do tp.dispose();
+				do obj.dispose();
+			}
+			else { let p = p.getNext(); }
+		}
+		let cur = cur + step;
+		return;
+	}
+}
+

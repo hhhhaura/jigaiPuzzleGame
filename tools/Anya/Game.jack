@@ -1,0 +1,101 @@
+/*
+Rules :
+Anya is running an obstacle race, 
+running fast and not bumping into obstacles is considered elegant.
+There is a camera shooting Anya, 
+and she fails instantly if her body touches the left side of the frame.
+Anya is weak at running, and she runs out of energy in a very short time.
+Loyd knows his daughter well, and he decides to put some peanuts along the path
+to boost her energy.
+
+How far can you possibly go ? 
+Reaches "final speed"
+
+Change the "downward motion" of anya
+Change the "rightward motion" of anya
+*/
+class Game {
+	field Anya anya; // cute anya
+	field Obstacles obs; // the obstacles
+	field Score score; // keep track of energy, score, and hearts
+	field Peanuts pea;
+	constructor Game new() {
+		let anya = Anya.new();
+		let obs = Obstacles.new();
+		let score = Score.new();
+		let pea = Peanuts.new();
+		return this;
+	}
+	method void wahwah() {
+		do Graphics.notElegant();
+		//do Sys.wait(100);
+		let pea = Peanuts.new();
+		let obs = Obstacles.new();
+		let anya = Anya.new();
+		return;
+	}
+	method boolean interact(int move, boolean eat) {
+		// clear everyone's action first
+		var boolean notElegant;
+		var boolean notElegant2;
+		var boolean bump;
+		var boolean endgame;
+		var int prex;
+		// obs and peanuts move
+
+		do anya.show(0);
+		do obs.show(0);
+		do score.show(0);
+		do pea.show(0);
+
+		do obs.move();
+		do pea.move();
+		// anya move and returns whether she is not elegant
+		let prex = anya.getX1();
+		let notElegant = anya.move(move);
+		if(notElegant) { do wahwah(); }
+		// check anya collide obs and change her state
+		let notElegant2 = obs.collide(anya, prex);
+		if(notElegant2) { do wahwah(); }
+		// check if peanuts collide with anya and eat
+		if(eat) { let bump = pea.collide(anya); }
+		else { let bump = false; }
+		// update scoreboard
+		let endgame = score.update((notElegant | notElegant2), (bump & eat));
+		// show everyone, order : peanuts, anya, walls, score;
+		do pea.show(1);
+		do obs.show(1);
+		do score.show(1);
+		do anya.show(1);
+		return endgame;
+	}
+	method void run() {
+		var boolean exit, die, eat;
+		var int key, move, step;
+		let exit = false;
+		let step = 0;
+		while(~exit) {
+			let key = Keyboard.keyPressed();	
+			// preprocess key
+			if(~(((key=32) | (key=133)) | (key=132))) { let move = 0; }
+			else { let move = key; }
+
+			// preprocess eat
+			// if anya runs, blocks move faster
+			if(key = 128) { let eat = true; }
+			else { let eat = false; }
+
+			let die = interact(move, eat);
+			let step = step + 1;
+
+			if(die) {
+				do Graphics.endGame();
+				do Sys.halt();
+			}
+			// wait a specific time
+			do Sys.wait(Utils.max(5, (1000 - step) / 10));
+		}
+		return;
+	}
+}
+

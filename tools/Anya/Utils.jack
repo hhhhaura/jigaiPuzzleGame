@@ -1,0 +1,20 @@
+class Utils {
+	function int max(int a, int b) {
+		if(a > b) { return a; }
+		else { return b; }
+	}
+	function int min(int a, int b) {
+		if(a < b) { return a; }
+		else { return b; }
+	}
+	function int modulo(int num, int x) {
+		var int res;
+		if((~(num > x)) | (x=0)) {
+			let res = num;
+		} else {
+			let res = num - (x * Math.divide(num, x));
+		}
+		return res;
+	}
+
+}

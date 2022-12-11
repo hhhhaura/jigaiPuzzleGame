@@ -1,0 +1,59 @@
+class Obj {
+	field int x, y, x1, y1, type;
+	// type 2 : peanuts
+	// type 0 : up obstacles
+	// type 1 : down obstacles
+	constructor Obj new(int _type, int _x) { // left down
+		var int val;
+		let val = Random.binary();
+
+		let type = _type;
+		if(type = 0) {
+			let x = _x;
+			let x1 = x + 31;
+			let y1 = 199;
+			let y = 0;
+		}
+		if(type = 1) {
+			let x = _x;
+			let x1 = x + 31;
+			let y = 192;
+			let y1 = 255;
+		}
+		if(type = 2) {
+			let x = _x;
+			let x1 = x + 63;
+			if(val = 0) {
+				let y = 192;
+				let y1 = 255;
+			}
+			else {
+				let y = 136;
+				let y1 = 199;
+			}
+		}
+		return this;
+	}
+	method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+	}
+	method int getType() { return type; }
+	method int getX(int time) { return x-time; }
+	method int getY(int time) { return y; }
+	method int getX1(int time) { return x1-time; }
+	method int getY1(int time) { return y1; }
+	method int word(int x, int y) { return (y * 32) + (x / 16); }
+	method void draw(int time) {// left down
+		if(type = 0) { do Graphics.obstacleUp(word(x - time, y)); }
+		if(type = 1) { do Graphics.obstacleDown(word(x - time, y)); }
+		if(type = 2) { do Graphics.peanut(word(x - time, y)); }
+		return;
+	}
+	method void erase(int time) {
+		if(type = 0) { do Graphics.eraseObsUp(word(x - time, y)); }
+		if(type = 1) { do Graphics.eraseObsDown(word(x - time, y)); }
+		if(type = 2) { do Graphics.eraseBig(word(x - time, y)); }
+		return;
+	}
+}

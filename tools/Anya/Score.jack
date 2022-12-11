@@ -1,0 +1,43 @@
+class Score {
+	field int x, y, x1, y1;	
+	field int step, hearts, oil;
+	constructor Score new() {
+		let x = 5;
+		let y = 5;
+		let x1 = 130;
+		let y1 = 70;
+		let step = 0;
+		let hearts = 3;
+		let oil = 100;
+		do show(1);
+		return this;
+	}
+	method void show(int col) {
+		do Screen.setColor(0);
+		if(col = 0) { do Screen.drawRectangle(x, y, x1, y1); }
+		else {
+			do Screen.drawRectangle(x, y, x1, y1);
+			do Output.moveCursor(1, 1);
+			do Output.printString("LIVES: ");
+			do Output.printInt(hearts);
+			do Output.moveCursor(2, 1);
+			do Output.printString("OIL: ");
+			do Output.printInt(oil);
+			do Output.moveCursor(3, 1);
+			do Output.printString("SCORE: ");
+			do Output.printInt(step);
+		}
+		return;
+	}
+	method boolean update(boolean inelegant, boolean peanuts) {
+		if(inelegant) {let hearts = hearts - 1; }
+		if(peanuts) { let oil = oil + 60;}
+		if(hearts = 0) { return true; }
+		if(oil < 1) { return true; }
+		let oil = oil - 1;
+		let step = step + 1;
+		return false;
+	}
+}
+
+

@@ -1,0 +1,123 @@
+class Anya {
+	field int x, y, x1, y1;
+	static int u, d, l, r, jspeed, g, scale;
+	field int velx, vely, bg, sm, state, step;
+	// adjust time -> adjust speed
+	constructor Anya new() {
+		// character constants
+		let bg = 256 / 4;
+		let sm = 256 / 8;
+		let u = 50;
+		let d = 255;
+		let r = 439;
+		let l = 0;
+		// speed variables
+		let jspeed = 26;
+		let g = 4;
+		let velx = 16;
+		let vely = 0;
+		let scale = 1;
+		// state variables
+		let step = 0;
+		let state = 0;
+		let x = 100;
+		let y = 256 - bg;
+		let x1 = x + bg - 1;
+		let y1 = y + bg - 1;
+		do show(1);
+		return this;
+	}
+	method int word(int x, int y) { return (y * 32) + (x / 16); }
+	method int getX() { return x; }
+	method int getY() { return y; }
+	method int getX1() { return x1; }
+	method int getY1() { return y1; }
+	method void show(int col) {
+		var int w;
+		let w = word(x, y);
+		if(state = 0) { do Graphics.standNia(w, col); }
+		if(state = 1) {
+			if(Utils.modulo(step, 2) = 1) {
+				do Graphics.walkNia1(w, col);
+			}
+			else { do Graphics.walkNia2(w, col); }
+		}
+		if(state = 2) {
+			if(Utils.modulo(step, 2) = 1) {
+				do Graphics.crawlNia1(w, col);
+			}
+			else { do Graphics.crawlNia2(w, col); }
+		}
+		if(state = 3) {
+			do Graphics.jumpNia(w, col);
+		}
+		return;
+	}
+	method void setPos(int _x, int _y, int _x1, int _y1) {
+		let x = _x;
+		let y = _y;
+		let x1 = _x1;
+		let y1 = _y1;
+		return;
+	}
+	method boolean move(int key) {
+		var int tp;
+		var boolean crawl;
+		let step = step + 1;
+		if(y1 + 1 -(vely / scale)>255) {
+			if((key = 0)) {
+				let x = x - velx;
+				let x1 = x1 - velx;
+			}
+			else {
+				let x = x + velx;
+				let x1 = x1 + velx;
+			}
+		}
+		else {
+			let x = x + velx;
+			let x1 = x1 + velx;
+		}
+		if(x < l) { return true; }
+		if(x1 > r) {
+			let x = x - (x1 - r);
+			let x1 = r;
+		}
+		// deal with y coordinate
+		let crawl = false;
+		if(y1 + 1 -(vely / scale)>255) {
+			if(key = 133) {
+				let y1 = 255;
+				let y = 256 - sm;
+				let crawl = true;
+			}
+			else {
+				let y = y1 - bg + 1;
+				if(key = 32) { let vely = jspeed; }
+				let y1 = y1 - (vely / scale);
+				let y = y - (vely / scale);
+				let vely = vely - g;
+			}
+
+		}
+		else {
+			let y1 = y1 - (vely / scale);
+			let y = y - (vely / scale);
+			let vely = vely - g;
+		}
+		if(y < u) {
+			let y1 = y1 - (y - u);
+			let y = u;
+		}
+		if(y1 > d) {
+			let y = y - (y1 - d);
+			let y1 = d;
+		}
+		//deal with states
+		if(key = 32) { let state = 3; }
+		if(crawl) { let state = 2; }
+		if(key = 0) { let state = 0; }
+		if(key = 132) { let state = 1; }
+		return false;
+	}
+}

@@ -1,0 +1,55 @@
+function Utils.max 0
+push argument 0
+push argument 1
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 0
+return
+goto IF_END0
+label IF_FALSE0
+push argument 1
+return
+label IF_END0
+function Utils.min 0
+push argument 0
+push argument 1
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 0
+return
+goto IF_END0
+label IF_FALSE0
+push argument 1
+return
+label IF_END0
+function Utils.modulo 1
+push argument 0
+push argument 1
+gt
+not
+push argument 1
+push constant 0
+eq
+or
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 0
+pop local 0
+goto IF_END0
+label IF_FALSE0
+push argument 0
+push argument 1
+push argument 0
+push argument 1
+call Math.divide 2
+call Math.multiply 2
+sub
+pop local 0
+label IF_END0
+push local 0
+return
