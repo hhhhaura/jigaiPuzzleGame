@@ -1,87 +1,55 @@
 class Peanuts {
-	field int cur, step;
-	field List st, end;
+	field int cur, step, potential;
+	field Obj obj;
 
 	constructor Peanuts new() {
 		let cur = 0;
-		let step = 16;
-		let st = null;
-		let end = null;
+		let potential = 0;
+		let step = 32;
+		let obj = null;
 		return this;
 	}
 	method boolean collide(Anya anya) { // check if this passes a position
-		var List p, pre, nxt;
-		var Obj obj;
 		var int x, x1, y, y1;
 		let x = anya.getX();
 		let x1 = anya.getX1();
 		let y = anya.getY();
 		let y1 = anya.getY1();
-		let p = st;
-		let pre = null;
-		while(~(p = null)) {
-			let obj = p.getData();
-			if((((Utils.max(x, obj.getX(cur))-1) < Utils.min(x1, obj.getX1(cur))) &
-					(Utils.max(y, obj.getY(cur))-1 < Utils.min(y1, obj.getY1(cur))))) {
-				// move the peanuts 
-				let nxt = p.getNext();
-
-				if(~(pre = null)) { do pre.setNext(nxt); }
-				else { let st = nxt; }
-
-				if(nxt = null) { let end = pre; }
-				do p.dispose();
-				return true;
-			}
-			else {
-				let pre = p;
-				let p = p.getNext();
-			}
+		if(obj = null) { return false; }
+		if((((Utils.max(x, obj.getX(cur))-1) < Utils.min(x1, obj.getX1(cur))) &
+				(Utils.max(y, obj.getY(cur))-1 < Utils.min(y1, obj.getY1(cur))))) {
+			// move the peanuts 
+			do obj.dispose();
+			let obj = null;
+			return true;
 		}
 		return false;
 	}
 	method void add() {
-		var List pp;
-		var Obj obj;
 		let obj = Obj.new(2, cur+440);
-		let pp = end;
-		let end = List.new(obj, null);
-		if(pp=null) { let st = end; }
-		else { do pp.setNext(end); }
-		
 		return;
 	}
 	method void show(int col) {
-		var List p, tp;
-		var Obj obj;
-		let p = st;
-		while(~(p = null)) {
-			let obj = p.getData();
-			if(col = 0) { do obj.erase(cur); }
-			else { do obj.draw(cur); }
-			let p = p.getNext();
-		}
+		if(obj = null) { return; }
+		if(col = 0) { do obj.erase(cur); }
+		else { do obj.draw(cur); }
 		return;
 	}
 	method void move() {
-		var List p, tp;
-		var Obj obj;
-		let p = st;
-		if(Utils.modulo(cur + step, 100) = 0) { do add(); }
-		while(~(p = null)) {
-			let obj = p.getData();
-			if((obj.getX(cur+step)<0)) {
-				let tp = p;
-				let p = p.getNext();
-				let st = p;
-				do tp.dispose();
-				do obj.dispose();
-			}
-			else { let p = p.getNext(); }
+		let potential = potential + 1;
+		if(potential > 50) { 
+			do add(); 
+			let potential = potential - 50;
+		}
+		if(obj = null) {
+			return;
+		}
+		if((obj.getX(cur+step)<0)) {
+			do obj.dispose();
+			let obj = null;
 		}
 		let cur = cur + step;
 		return;
-
 	}
 }
 

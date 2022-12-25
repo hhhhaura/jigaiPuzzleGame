@@ -1,10 +1,11 @@
 class Obstacles {
-	field int cur, step;
+	field int cur, step, potential;
 	field List st, end;
 
 	constructor Obstacles new() {
+		let potential = 0;
 		let cur = 0;
-		let step = 16;
+		let step = 32;
 		let st = null;
 		let end = null;
 		return this;
@@ -55,8 +56,7 @@ class Obstacles {
 	method void add() {
 		var List pp;
 		var Obj obj;
-		//let obj = Obj.new(Random.binary(), cur+440);
-		let obj = Obj.new(1, cur + 440);
+		let obj = Obj.new(Random.binary(), cur+440);
 		let pp = end;
 		let end = List.new(obj, null);
 		if(pp=null) { let st = end; }
@@ -81,7 +81,11 @@ class Obstacles {
 		var List p, tp;
 		var Obj obj;
 		let p = st;
-		if(Utils.modulo(cur + step, 30) = 0) { do add(); }
+		let potential = potential + 1;
+		if(potential > 10) {
+			do add();
+			let potential = potential - 10;
+		}
 		while(~(p = null)) {
 			let obj = p.getData();
 			if((obj.getX(cur+step)<0)) {

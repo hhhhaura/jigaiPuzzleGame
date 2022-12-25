@@ -1,6 +1,6 @@
 class Anya {
 	field int x, y, x1, y1;
-	static int u, d, l, r, jspeed, g, scale;
+	static int u, d, l, r, jspeed, g, scale, pspeed;
 	field int velx, vely, bg, sm, state, step;
 	// adjust time -> adjust speed
 	constructor Anya new() {
@@ -12,9 +12,10 @@ class Anya {
 		let r = 439;
 		let l = 0;
 		// speed variables
-		let jspeed = 26;
-		let g = 4;
-		let velx = 16;
+		let pspeed = 16;
+		let jspeed = 32;
+		let g = 10;
+		let velx = 32;
 		let vely = 0;
 		let scale = 1;
 		// state variables
@@ -80,8 +81,8 @@ class Anya {
 			}
 		}
 		else {
-			let x = x + velx;
-			let x1 = x1 + velx;
+			let x = x + pspeed;
+			let x1 = x1 + pspeed;
 		}
 		if(x < l) { return true; }
 		if(x1 > r) {

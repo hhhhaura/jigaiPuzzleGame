@@ -139,7 +139,7 @@ if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
 push this 6
-push constant 60
+push constant 90
 add
 pop this 6
 label IF_FALSE1

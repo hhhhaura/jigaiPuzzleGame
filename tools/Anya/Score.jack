@@ -33,7 +33,7 @@ class Score {
 	}
 	method boolean update(boolean inelegant, boolean peanuts) {
 		if(inelegant) {let hearts = hearts - 1; }
-		if(peanuts) { let oil = oil + 60;}
+		if(peanuts) { let oil = oil + 90;}
 		if(hearts = 0) { return true; }
 		if(oil < 1) { return true; }
 		let oil = oil - 1;

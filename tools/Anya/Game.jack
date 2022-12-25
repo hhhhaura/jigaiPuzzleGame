@@ -27,7 +27,7 @@ class Game {
 		return this;
 	}
 	method void wahwah() {
-		do Graphics.notElegant();
+		do Graphics.QQ();
 		do Sys.wait(500);
 		let pea = Peanuts.new();
 		let obs = Obstacles.new();
@@ -75,12 +75,17 @@ class Game {
 		do Graphics.startGame();
 		while(true) {
 			let key = Keyboard.keyPressed();	
-			if(key = 128) { return; }
+			if(key = 128) { 
+				do Graphics.go();
+				do Sys.wait(400);
+				do Screen.clearScreen();
+				return; 
+			}
 		}
 		return;
 	}
 	method void endGame() {
-		do Graphics.endGame();
+		do Graphics.QQ();
 		do Sys.wait(1000);
 		do Sys.halt();
 		return;
@@ -108,7 +113,7 @@ class Game {
 
 			if(die) { do endGame(); }
 			// wait a specific time
-			do Sys.wait(Utils.max(20, (1000 - step) / 10));
+			do Sys.wait(Utils.max(80, (2000 - step) / 10));
 		}
 		return;
 	}
