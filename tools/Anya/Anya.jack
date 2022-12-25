@@ -5,8 +5,8 @@ class Anya {
 	// adjust time -> adjust speed
 	constructor Anya new() {
 		// character constants
-		let bg = 256 / 4;
-		let sm = 256 / 8;
+		let bg = 64;
+		let sm = 54;
 		let u = 50;
 		let d = 255;
 		let r = 439;
@@ -33,6 +33,7 @@ class Anya {
 	method int getX1() { return x1; }
 	method int getY1() { return y1; }
 	method void show(int col) {
+
 		var int w;
 		let w = word(x, y);
 		if(state = 0) { do Graphics.standNia(w, col); }
@@ -58,6 +59,10 @@ class Anya {
 		let y = _y;
 		let x1 = _x1;
 		let y1 = _y1;
+		return;
+	}
+	method void setState(int type) {
+		let state = type;
 		return;
 	}
 	method boolean move(int key) {

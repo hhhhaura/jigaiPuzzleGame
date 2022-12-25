@@ -1,6 +1,7 @@
 class Score {
 	field int x, y, x1, y1;	
 	field int step, hearts, oil;
+
 	constructor Score new() {
 		let x = 5;
 		let y = 5;
@@ -9,6 +10,7 @@ class Score {
 		let step = 0;
 		let hearts = 3;
 		let oil = 100;
+		
 		do show(1);
 		return this;
 	}

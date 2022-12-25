@@ -23,6 +23,7 @@ class Obstacles {
 		let yes = false;
 		while(~(p = null)) {
 			let obj = p.getData();
+			let type = obj.getType();
 			if(((Utils.max(x, obj.getX(cur))-1) < Utils.min(x1, obj.getX1(cur))) &
 					(Utils.max(y, obj.getY(cur))-1 < Utils.min(y1, obj.getY1(cur)))) {
 				if((prex < obj.getX(cur - step))) {
@@ -30,10 +31,11 @@ class Obstacles {
 					let x1 = obj.getX(cur) - 1;
 				}
 				else {
-					if(type = 1) {
+					if(type = 0) {
 						if(y - 1 < obj.getY1(cur)) {
-							let y1 = y1 - (y - obj.getY1(cur) - 1);
-							let y = obj.getY1(cur) + 1;
+							do anya.setState(2);
+							let y1 = 255;
+							let y = 202;
 						}
 					}
 					else {
@@ -53,7 +55,8 @@ class Obstacles {
 	method void add() {
 		var List pp;
 		var Obj obj;
-		let obj = Obj.new(Random.binary(), cur+440);
+		//let obj = Obj.new(Random.binary(), cur+440);
+		let obj = Obj.new(1, cur + 440);
 		let pp = end;
 		let end = List.new(obj, null);
 		if(pp=null) { let st = end; }

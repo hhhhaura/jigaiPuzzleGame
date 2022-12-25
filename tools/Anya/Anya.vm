@@ -2,13 +2,9 @@ function Anya.new 0
 push constant 10
 call Memory.alloc 1
 pop pointer 0
-push constant 256
-push constant 4
-call Math.divide 2
+push constant 64
 pop this 6
-push constant 256
-push constant 8
-call Math.divide 2
+push constant 54
 pop this 7
 push constant 50
 pop static 0
@@ -182,6 +178,13 @@ push argument 3
 pop this 2
 push argument 4
 pop this 3
+push constant 0
+return
+function Anya.setState 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 8
 push constant 0
 return
 function Anya.move 2

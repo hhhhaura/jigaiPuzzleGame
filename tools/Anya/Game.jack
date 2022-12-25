@@ -28,7 +28,7 @@ class Game {
 	}
 	method void wahwah() {
 		do Graphics.notElegant();
-		//do Sys.wait(100);
+		do Sys.wait(500);
 		let pea = Peanuts.new();
 		let obs = Obstacles.new();
 		let anya = Anya.new();
@@ -40,7 +40,7 @@ class Game {
 		var boolean notElegant2;
 		var boolean bump;
 		var boolean endgame;
-		var int prex;
+		var int prex, prey;
 		// obs and peanuts move
 
 		do anya.show(0);
@@ -52,6 +52,7 @@ class Game {
 		do pea.move();
 		// anya move and returns whether she is not elegant
 		let prex = anya.getX1();
+		let prey = anya.getY1();
 		let notElegant = anya.move(move);
 		if(notElegant) { do wahwah(); }
 		// check anya collide obs and change her state
@@ -69,11 +70,28 @@ class Game {
 		do anya.show(1);
 		return endgame;
 	}
+	method void opening() {
+		var int key;
+		do Graphics.startGame();
+		while(true) {
+			let key = Keyboard.keyPressed();	
+			if(key = 128) { return; }
+		}
+		return;
+	}
+	method void endGame() {
+		do Graphics.endGame();
+		do Sys.wait(1000);
+		do Sys.halt();
+		return;
+	}
 	method void run() {
 		var boolean exit, die, eat;
 		var int key, move, step;
 		let exit = false;
 		let step = 0;
+		// Opening
+		do opening();
 		while(~exit) {
 			let key = Keyboard.keyPressed();	
 			// preprocess key
@@ -88,12 +106,9 @@ class Game {
 			let die = interact(move, eat);
 			let step = step + 1;
 
-			if(die) {
-				do Graphics.endGame();
-				do Sys.halt();
-			}
+			if(die) { do endGame(); }
 			// wait a specific time
-			do Sys.wait(Utils.max(5, (1000 - step) / 10));
+			do Sys.wait(Utils.max(20, (1000 - step) / 10));
 		}
 		return;
 	}
