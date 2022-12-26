@@ -2868,7 +2868,7 @@ class Graphics {
 	}
 	function void endGame() {
 		var int memAddress;
-		let memAddress = 16384+0;
+		let memAddress = 16384+4112;
 		// column 0
 		do Memory.poke(memAddress +32, -16384);
 		do Memory.poke(memAddress +64, 28672);

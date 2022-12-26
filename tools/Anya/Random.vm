@@ -9,6 +9,16 @@ push constant 1
 add
 push constant 10007
 call Math.multiply 2
+push static 0
+add
+push static 0
+call Math.multiply 2
+push constant 47
+sub
+push static 0
+push constant 2
+add
+call Math.multiply 2
 pop static 0
 push static 0
 return

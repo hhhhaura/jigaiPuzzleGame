@@ -17,7 +17,7 @@ push argument 0
 pop pointer 0
 call Graphics.QQ 0
 pop temp 0
-push constant 500
+push constant 1000
 call Sys.wait 1
 pop temp 0
 call Peanuts.new 0
@@ -159,7 +159,9 @@ return
 function Game.endGame 0
 push argument 0
 pop pointer 0
-call Graphics.QQ 0
+call Screen.clearScreen 0
+pop temp 0
+call Graphics.endGame 0
 pop temp 0
 push constant 1000
 call Sys.wait 1
@@ -238,7 +240,7 @@ push pointer 0
 call Game.endGame 1
 pop temp 0
 label IF_FALSE2
-push constant 80
+push constant 40
 push constant 2000
 push local 5
 sub

@@ -37,9 +37,9 @@ class Peanuts {
 	}
 	method void move() {
 		let potential = potential + 1;
-		if(potential > 50) { 
+		if(potential > 53) { 
 			do add(); 
-			let potential = potential - 50;
+			let potential = potential - 53;
 		}
 		if(obj = null) {
 			return;

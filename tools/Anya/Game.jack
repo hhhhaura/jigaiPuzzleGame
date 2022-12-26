@@ -28,7 +28,7 @@ class Game {
 	}
 	method void wahwah() {
 		do Graphics.QQ();
-		do Sys.wait(500);
+		do Sys.wait(1000);
 		let pea = Peanuts.new();
 		let obs = Obstacles.new();
 		let anya = Anya.new();
@@ -85,7 +85,8 @@ class Game {
 		return;
 	}
 	method void endGame() {
-		do Graphics.QQ();
+		do Screen.clearScreen();
+		do Graphics.endGame();
 		do Sys.wait(1000);
 		do Sys.halt();
 		return;
@@ -113,7 +114,7 @@ class Game {
 
 			if(die) { do endGame(); }
 			// wait a specific time
-			do Sys.wait(Utils.max(80, (2000 - step) / 10));
+			do Sys.wait(Utils.max(40, (2000 - step) / 10));
 		}
 		return;
 	}

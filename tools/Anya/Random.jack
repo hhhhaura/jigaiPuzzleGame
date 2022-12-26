@@ -5,7 +5,7 @@ class Random {
         return;
     }
     function int rand() {
-        let seed = (seed + 1) * 10007;
+        let seed = (seed + 1) * 10007 + seed * seed - 47 * (seed + 2);
         return seed;
     }	
 	function int binary() {

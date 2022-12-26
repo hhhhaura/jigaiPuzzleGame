@@ -17446,7 +17446,7 @@ push constant 0
 return
 function Graphics.endGame 1
 push constant 16384
-push constant 0
+push constant 4112
 add
 pop local 0
 push local 0
